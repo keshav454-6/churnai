@@ -6,12 +6,24 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { k } = body;
 
+    // Fetch data from local database
+    const customers = await prisma.customer.findMany({
+      select: {
+        customerId: true, tenure: true, monthlyCharges: true, 
+        totalCharges: true, numberOfServices: true, complaints: true, 
+        customerSupportCalls: true, latePayments: true
+      }
+    });
+
     // Send to Python ML Service
     const ML_URL = process.env.ML_SERVICE_URL || 'http://localhost:8000';
     const mlResponse = await fetch(`${ML_URL}/segment`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ k })
+      body: JSON.stringify({ 
+        k,
+        training_data: customers
+      })
     });
 
     if (!mlResponse.ok) {

@@ -84,7 +84,7 @@ def trigger_training(req: TrainRequest):
 @app.post("/segment", response_model=SegmentationResponse)
 def trigger_segmentation(req: SegmentationRequest):
     try:
-        results = train_segmentation(req.k)
+        results = train_segmentation(req.k, raw_data=req.training_data)
         
         # NOTE: In a real system, we would take `results['assignments']` and bulk update 
         # the MySQL `customer_segments` table directly from here or via an API call back to Next.js.

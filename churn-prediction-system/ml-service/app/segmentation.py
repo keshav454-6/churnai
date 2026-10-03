@@ -7,11 +7,12 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 from app.preprocessing import fetch_customer_data
 
-def train_segmentation(k=3):
+def train_segmentation(k=3, raw_data=None):
     """
     Trains a K-Means model on numeric customer data to find segments.
     """
-    raw_data = fetch_customer_data()
+    if raw_data is None:
+        raw_data = fetch_customer_data()
     if len(raw_data) < k:
         raise ValueError("Not enough data to form clusters.")
 

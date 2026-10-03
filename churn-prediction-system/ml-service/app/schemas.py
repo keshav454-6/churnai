@@ -40,6 +40,7 @@ class TrainResponse(BaseModel):
 
 class SegmentationRequest(BaseModel):
     k: int = 3
+    training_data: Optional[List[Dict[str, Any]]] = None
     
 class SegmentationResponse(BaseModel):
     status: str
