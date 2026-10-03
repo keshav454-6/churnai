@@ -68,26 +68,26 @@ export default function PredictPage() {
           <form onSubmit={handlePredict} className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Customer ID</label>
-              <input type="text" name="customer_id" value={formData.customer_id} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md" required />
+              <input type="text" name="customer_id" value={formData.customer_id} onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Age</label>
-              <input type="number" name="age" value={formData.age} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md" required />
+              <input type="number" name="age" value={formData.age} onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Gender</label>
-              <select name="gender" value={formData.gender} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md">
+              <select name="gender" value={formData.gender} onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Tenure (Months)</label>
-              <input type="number" name="tenure" value={formData.tenure} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md" required />
+              <input type="number" name="tenure" value={formData.tenure} onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Contract Type</label>
-              <select name="contract_type" value={formData.contract_type} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md">
+              <select name="contract_type" value={formData.contract_type} onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 <option value="Month-to-month">Month-to-month</option>
                 <option value="One year">One year</option>
                 <option value="Two year">Two year</option>
@@ -95,7 +95,7 @@ export default function PredictPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Internet Service</label>
-              <select name="internet_service" value={formData.internet_service} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md">
+              <select name="internet_service" value={formData.internet_service} onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 <option value="DSL">DSL</option>
                 <option value="Fiber optic">Fiber optic</option>
                 <option value="No">No</option>
@@ -103,19 +103,19 @@ export default function PredictPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Monthly Charges ($)</label>
-              <input type="number" step="0.01" name="monthly_charges" value={formData.monthly_charges} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md" required />
+              <input type="number" step="0.01" name="monthly_charges" value={formData.monthly_charges} onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Customer Support Calls</label>
-              <input type="number" name="customer_support_calls" value={formData.customer_support_calls} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md" />
+              <input type="number" name="customer_support_calls" value={formData.customer_support_calls} onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Complaints</label>
-              <input type="number" name="complaints" value={formData.complaints} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md" />
+              <input type="number" name="complaints" value={formData.complaints} onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Late Payments</label>
-              <input type="number" name="late_payments" value={formData.late_payments} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md" />
+              <input type="number" name="late_payments" value={formData.late_payments} onChange={handleChange} className="mt-1 block w-full p-2 border border-gray-300 bg-white text-gray-900 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
             </div>
             
             <div className="md:col-span-2 pt-4">

@@ -25,7 +25,8 @@ class PredictionResponse(BaseModel):
     model_version: str
 
 class TrainRequest(BaseModel):
-    model_type: str = "random_forest" # "logistic_regression", "decision_tree", "random_forest"
+    model_type: str = "random_forest"
+    training_data: Optional[List[Dict[str, Any]]] = None
     
 class TrainResponse(BaseModel):
     status: str

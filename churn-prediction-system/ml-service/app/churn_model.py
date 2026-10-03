@@ -7,11 +7,12 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix
 from app.preprocessing import fetch_customer_data, preprocess_data_for_training
 
-def train_model(model_type="random_forest"):
+def train_model(model_type="random_forest", raw_data=None):
     """
     Fetches data, preprocesses it, trains the requested model, evaluates it, and saves it.
     """
-    raw_data = fetch_customer_data()
+    if raw_data is None:
+        raw_data = fetch_customer_data()
     if len(raw_data) < 10:
         raise ValueError("Not enough data to train a model. Please import more customers.")
 

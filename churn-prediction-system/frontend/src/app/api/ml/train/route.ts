@@ -6,12 +6,26 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { modelType } = body; // e.g. "random_forest"
 
-    // Proxy request to Python FastAPI ML Service
+    // Fetch training data from local database
+    const customers = await prisma.customer.findMany({
+      select: {
+        customerId: true, age: true, gender: true, tenure: true,
+        contractType: true, monthlyCharges: true, totalCharges: true,
+        paymentMethod: true, internetService: true, numberOfServices: true,
+        complaints: true, customerSupportCalls: true, usageFrequency: true,
+        latePayments: true, churn: true
+      }
+    });
+
+    // Proxy request to Python FastAPI ML Service with data
     const ML_URL = process.env.ML_SERVICE_URL || 'http://localhost:8000';
     const mlResponse = await fetch(`${ML_URL}/train`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model_type: modelType })
+      body: JSON.stringify({ 
+        model_type: modelType,
+        training_data: customers
+      })
     });
 
     if (!mlResponse.ok) {

@@ -51,7 +51,7 @@ def predict_churn(customer: CustomerData):
 @app.post("/train", response_model=TrainResponse)
 def trigger_training(req: TrainRequest):
     try:
-        metrics, path = train_model(req.model_type)
+        metrics, path = train_model(req.model_type, raw_data=req.training_data)
         return TrainResponse(
             status="success",
             model_name=req.model_type,
