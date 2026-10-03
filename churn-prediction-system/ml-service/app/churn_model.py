@@ -47,8 +47,8 @@ def train_model(model_type="random_forest", raw_data=None):
     }
     
     # Save Model
-    os.makedirs('../models', exist_ok=True)
-    model_path = f"../models/{model_type}.joblib"
+    os.makedirs('/tmp/models', exist_ok=True)
+    model_path = f"/tmp/models/{model_type}.joblib"
     joblib.dump(model, model_path)
     
     return metrics, model_path

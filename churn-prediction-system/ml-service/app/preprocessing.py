@@ -87,8 +87,8 @@ def preprocess_data_for_training(data):
     X = pipeline.fit_transform(features_list)
     
     # Save the pipeline so we can use it during inference
-    os.makedirs('../models', exist_ok=True)
-    joblib.dump(pipeline, '../models/preprocessor.joblib')
+    os.makedirs('/tmp/models', exist_ok=True)
+    joblib.dump(pipeline, '/tmp/models/preprocessor.joblib')
     
     return X, np.array(y), pipeline
 
@@ -96,7 +96,7 @@ def preprocess_inference_data(customer_dict):
     """
     Processes a single customer dict for real-time prediction.
     """
-    pipeline = joblib.load('../models/preprocessor.joblib')
+    pipeline = joblib.load('/tmp/models/preprocessor.joblib')
     
     feat = {
         'age': float(customer_dict.age) if customer_dict.age is not None else np.nan,

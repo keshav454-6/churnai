@@ -19,7 +19,7 @@ def read_root():
 @app.post("/predict", response_model=PredictionResponse)
 def predict_churn(customer: CustomerData):
     try:
-        model_path = "../models/random_forest.joblib"
+        model_path = "/tmp/models/random_forest.joblib"
         
         # If running on Vercel (serverless), the trained model file might not persist. 
         # Fallback to a heuristic logic if the file is missing.

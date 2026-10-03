@@ -4,7 +4,8 @@ import { prisma } from '@/lib/prisma';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { k } = body;
+    let { k } = body;
+    if (!k || k < 2) k = 3;
 
     // Fetch data from local database
     const customers = await prisma.customer.findMany({

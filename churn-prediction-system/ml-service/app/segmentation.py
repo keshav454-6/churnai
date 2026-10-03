@@ -64,8 +64,8 @@ def train_segmentation(k=3, raw_data=None):
         cluster_centers.append(center_dict)
         
     # Save model
-    os.makedirs('../models', exist_ok=True)
-    joblib.dump({'pipeline': pipeline, 'kmeans': kmeans}, '../models/segmentation.joblib')
+    os.makedirs('/tmp/models', exist_ok=True)
+    joblib.dump({'pipeline': pipeline, 'kmeans': kmeans}, '/tmp/models/segmentation.joblib')
     
     # In a fully integrated system, we would push `customer_ids` and `clusters` array back to the Next.js API via webhook or direct MySQL update.
     # We leave that for the FastAPI endpoint to handle.
