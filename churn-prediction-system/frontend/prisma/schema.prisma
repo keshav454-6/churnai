@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id                     Int       @id @default(autoincrement())
+  customerId             String    @unique @db.VarChar(50)
+  age                    Int?
+  gender                 String?   @db.VarChar(10)
+  tenure                 Int?
+  contractType           String?   @db.VarChar(50)
+  monthlyCharges         Decimal?  @db.Decimal(10, 2)
+  totalCharges           Decimal?  @db.Decimal(10, 2)
+  paymentMethod          String?   @db.VarChar(50)
+  internetService        String?   @db.VarChar(50)
+  numberOfServices       Int?
+  complaints             Int?      @default(0)
+  customerSupportCalls   Int?      @default(0)
+  usageFrequency         String?   @db.VarChar(50)
+  latePayments           Int?      @default(0)
+  churn                  Boolean?  @default(false)
+  createdAt              DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt              DateTime  @updatedAt @db.Timestamp(0)
+
+  predictions            Prediction[]
+  segments               CustomerSegment[]
+
+  @@index([customerId])
+  @@index([churn])
+  @@index([contractType])
+  @@index([createdAt])
+  @@map("customers")
+}
+
+enum ModelType {
+  SUPERVISED
+  UNSUPERVISED
+}
+
+model MLModel {
+  id              Int       @id @default(autoincrement())
+  name            String    @db.VarChar(100)
+  algorithm       String    @db.VarChar(100) // Logistic Regression, Decision Tree, Random Forest, K-Means
+  modelType       ModelType
+  version         String?   @db.VarChar(20)
+  accuracy        Decimal?  @db.Decimal(5, 4)
+  precision       Decimal?  @db.Decimal(5, 4)
+  recall          Decimal?  @db.Decimal(5, 4)
+  f1Score         Decimal?  @db.Decimal(5, 4)
+  isActive        Boolean   @default(false)
+  modelPath       String?   @db.VarChar(255)
+  trainingDate    DateTime? @db.Timestamp(0)
+  createdAt       DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt       DateTime  @updatedAt @db.Timestamp(0)
+
+  predictions     Prediction[]
+  segments        CustomerSegment[]
+
+  @@map("ml_models")
+}
+
+model Prediction {
+  id                     Int       @id @default(autoincrement())
+  customerId             String    @db.VarChar(50)
+  predictedChurn         Boolean
+  probability            Decimal?  @db.Decimal(5, 4)
+  modelId                Int?
+  riskCategory           String?   @db.VarChar(20)
+  createdAt              DateTime  @default(now()) @db.Timestamp(0)
+
+  customer Customer @relation(fields: [customerId], references: [customerId], onDelete: Cascade)
+  model    MLModel? @relation(fields: [modelId], references: [id], onDelete: SetNull)
+
+  @@index([customerId])
+  @@map("predictions")
+}
+
+model CustomerSegment {
+  id           Int       @id @default(autoincrement())
+  customerId   String    @db.VarChar(50)
+  cluster      Int
+  segmentName  String?   @db.VarChar(100)
+  modelId      Int?
+  createdAt    DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt    DateTime  @updatedAt @db.Timestamp(0)
+
+  customer Customer @relation(fields: [customerId], references: [customerId], onDelete: Cascade)
+  model    MLModel? @relation(fields: [modelId], references: [id], onDelete: SetNull)
+
+  @@index([customerId])
+  @@map("customer_segments")
+}
+
+model ImportHistory {
+  id              Int       @id @default(autoincrement())
+  fileName        String    @db.VarChar(255)
+  fileType        String?   @db.VarChar(50)
+  totalRows       Int       @default(0)
+  successfulRows  Int       @default(0)
+  failedRows      Int       @default(0)
+  status          String    @db.VarChar(50) // SUCCESS, PARTIAL, FAILED
+  errorMessage    String?   @db.Text
+  createdAt       DateTime  @default(now()) @db.Timestamp(0)
+
+  @@map("import_history")
+}
