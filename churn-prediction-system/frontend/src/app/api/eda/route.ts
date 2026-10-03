@@ -2,6 +2,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 // Helper to serialize BigInts returned by Raw SQL COUNT(*)
 const serializeBigInt = (obj: any): any => {
   if (obj === null || obj === undefined) return obj;
