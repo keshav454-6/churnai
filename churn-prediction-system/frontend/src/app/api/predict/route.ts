@@ -7,7 +7,8 @@ export async function POST(request: Request) {
     const customerData = body; // raw form data mapped to python schemas
 
     // Send to Python ML Service
-    const mlResponse = await fetch('http://localhost:8000/predict', {
+    const ML_URL = process.env.ML_SERVICE_URL || 'http://localhost:8000';
+    const mlResponse = await fetch(`${ML_URL}/predict`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(customerData)

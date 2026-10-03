@@ -7,7 +7,8 @@ export async function POST(request: Request) {
     const { k } = body;
 
     // Send to Python ML Service
-    const mlResponse = await fetch('http://localhost:8000/segment', {
+    const ML_URL = process.env.ML_SERVICE_URL || 'http://localhost:8000';
+    const mlResponse = await fetch(`${ML_URL}/segment`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ k })
