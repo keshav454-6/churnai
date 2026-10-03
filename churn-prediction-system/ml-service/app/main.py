@@ -19,10 +19,31 @@ def read_root():
 @app.post("/predict", response_model=PredictionResponse)
 def predict_churn(customer: CustomerData):
     try:
-        # Load the default model (random_forest by default, or whichever is active)
         model_path = "../models/random_forest.joblib"
+        
+        # If running on Vercel (serverless), the trained model file might not persist. 
+        # Fallback to a heuristic logic if the file is missing.
         if not os.path.exists(model_path):
-            raise HTTPException(status_code=404, detail="Model not trained yet.")
+            # Heuristic logic for MVP demonstration
+            prob = 0.2
+            if customer.tenure and customer.tenure < 6:
+                prob += 0.3
+            if customer.monthly_charges and customer.monthly_charges > 70:
+                prob += 0.3
+            if customer.contract_type == "Month-to-month":
+                prob += 0.15
+            if customer.complaints and customer.complaints > 0:
+                prob += 0.2
+                
+            prob = min(0.95, prob) # Cap at 95%
+            
+            return PredictionResponse(
+                customer_id=customer.customer_id,
+                predicted_churn=bool(prob > 0.5),
+                probability=prob,
+                model_name="AutoAI Heuristic Fallback",
+                model_version="1.0 (Serverless)"
+            )
             
         model = joblib.load(model_path)
         
