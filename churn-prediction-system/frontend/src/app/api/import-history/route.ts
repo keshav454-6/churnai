@@ -11,7 +11,7 @@ export async function GET() {
     });
     return NextResponse.json(history);
   } catch (error) {
-    console.error('Error fetching import history:', error);
-    return NextResponse.json({ error: 'Failed to fetch import history' }, { status: 500 });
+    console.warn('Database offline on serverless, returning empty history:', error);
+    return NextResponse.json([]);
   }
 }
